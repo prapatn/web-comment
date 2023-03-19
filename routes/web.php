@@ -36,5 +36,6 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('dashboard',  [AuthController::class, 'dashboard'])->name('dashboard');
     Route::get('posts/show/{id}',  [PostController::class, 'show'])->name('posts.show');
     Route::post('posts/store', [PostController::class, 'store'])->name('posts.store');
-     Route::post('comment/store', [CommentController::class, 'store'])->name('comment.store');
+    Route::post('comment/store', [CommentController::class, 'store'])->name('comment.store');
+    Route::get('posts/delete/{id}',  [PostController::class, 'delete'])->name('posts.delete');
 });

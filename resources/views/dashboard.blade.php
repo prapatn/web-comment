@@ -39,7 +39,12 @@
                                                 <td>{{ $row->created_at }}</td>
                                                 <td>{{ $row->updated_at }}</td>
                                                 <td>
-                                                    <a href={{ route('posts.show', ['id'=>$row->id]) }}>ดูรายละเอียด</a>
+                                                    <a href={{ route('posts.show', ['id'=>$row->id]) }} class="btn btn-primary">รายละเอียด</a>
+                                                   @if (Auth::user()->id==$row->user_id)
+                                                        <a href={{ route('posts.delete', ['id'=>$row->id]) }} class="btn btn-warning">แก้ไข</a>
+                                                        <a href={{ route('posts.delete', ['id'=>$row->id]) }} class="btn btn-danger"
+                                                        onclick="return confirm('ต้องการลบโพสนี้หรือไม่')" >ลบ</a>
+                                                   @endif
                                                 </td>
                                             </tr>
                                             @endforeach

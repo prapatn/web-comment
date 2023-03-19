@@ -30,16 +30,18 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'         =>   'required',
-            'message'        =>   'required',
+            'title' => 'required',
+            'message' => 'required',
         ]);
 
         Posts::create([
-            'title'  =>  $request['title'],
-            'message' =>  $request['message'],
+            'title' => $request['title'],
+            'message' => $request['message'],
             'user_id' => Auth::user()->id,
         ]);
-        return redirect()->back()->with('success', 'เพิ่มโพสใหม่สำเร็จ');
+        return redirect()
+            ->back()
+            ->with('success', 'เพิ่มโพสใหม่สำเร็จ');
     }
 
     /**
@@ -48,10 +50,10 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Posts::find($id);
-        if(!$post){
-             abort(404);
+        if (!$post) {
+            abort(404);
         }
-        return view('posts.show',compact('post'));
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -73,8 +75,22 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Posts $posts)
+    public function delete($id)
     {
-        //
+        try {
+            $post = Posts::where('id', $id)
+                ->where('user_id', Auth::user()->id)
+                ->first();
+            if (!$post) {
+                abort(404);
+            }
+            $post->delete();
+
+            return redirect()
+                ->back()
+                ->with('success', 'ลบโพสสำเร็จ');
+        } catch (\Throwable $th) {
+            return abort(403);
+        }
     }
 }

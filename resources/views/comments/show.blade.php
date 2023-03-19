@@ -2,7 +2,6 @@
 <div class="display-comment" @if($comment->comment_id != null) style="margin-left:40px;" @endif>
     <strong>{{ $comment->user->name }}</strong>
     <p>{{ $comment->message }}</p>
-    <a href="" id="reply"></a>
     <form method="post" action="{{ route('comment.store') }}">
         @csrf
         <div class="form-group">
@@ -11,7 +10,7 @@
             <input type="hidden" name="comment_id" value="{{ $comment->id }}" />
         </div>
         <div class="form-group">
-            <input type="submit" class="btn btn-warning" value="Reply" />
+            <input type="submit" class="btn btn-warning" value="ตอบกลับ" />
         </div>
     </form>
     @include('comments.show', ['comments' => $comment->comments])
