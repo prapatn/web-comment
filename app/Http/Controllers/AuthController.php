@@ -13,6 +13,10 @@ class AuthController extends Controller
 {
     function index()
     {
+        if(Auth::check())
+        {
+            return view('dashboard');
+        }
         return view('login');
     }
 
