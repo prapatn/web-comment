@@ -9,11 +9,13 @@ class Posts extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'message'];
+    protected $fillable = ['title', 'message','user_id'];
+
+    protected $dates = ['created_at','updated_at'];
 
     public function comments()
     {
-        return $this->hasMany(Comments::class)->whereNull('comment_id');
+        return $this->hasMany(Comments::class);
     }
 
     public function user()

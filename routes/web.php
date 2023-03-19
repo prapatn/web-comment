@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,4 +33,6 @@ Route::controller(AuthController::class)->group(function(){
 
 Route::middleware(['auth.check'])->group(function () {
     Route::get('dashboard',  [AuthController::class, 'dashboard'])->name('dashboard');
+    Route::get('posts/show/{id}',  [PostController::class, 'show'])->name('posts.show');
+    Route::post('posts/store', [PostController::class, 'store'])->name('posts.store');
 });

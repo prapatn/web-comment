@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Posts;
 use Illuminate\Http\Request;
 
 use Hash;
@@ -15,7 +16,7 @@ class AuthController extends Controller
     {
         if(Auth::check())
         {
-            return view('dashboard');
+            return redirect('dashboard');
         }
         return view('login');
     }
@@ -65,7 +66,8 @@ class AuthController extends Controller
     {
         if(Auth::check())
         {
-            return view('dashboard');
+            $posts = Posts::orderBy('updated_at', 'DESC')->paginate(10);
+            return view('dashboard', compact('posts'));
         }
 
         return redirect('login')->with('success', 'you are not allowed to access');
