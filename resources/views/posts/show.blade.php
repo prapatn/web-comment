@@ -29,7 +29,7 @@
                     <form method="post" action={{ route('comment.store') }}>
                         @csrf
                         <div class="form-group">
-                            <textarea class="form-control" name="message"></textarea>
+                            <textarea class="form-control" name="message" required></textarea>
                             <input type="hidden" name="post_id" value="{{ $post->id }}" />
                             <input type="hidden" name="user_id" value="{{ $post->user_id }}" />
                         </div>

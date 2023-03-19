@@ -67,9 +67,29 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Posts $posts)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $request->validate([
+                'title' => 'required',
+                'message' => 'required',
+            ]);
+            $post = Posts::where('id', $id)
+                ->where('user_id', Auth::user()->id)
+                ->first();
+            if (!$post) {
+                abort(404);
+            }
+            $post->title = $request->title;
+            $post->message = $request->message;
+            $post->save();
+
+            return redirect()
+                ->back()
+                ->with('success', 'แก้ไชโพสสำเร็จ');
+        } catch (\Throwable $th) {
+            return abort(403);
+        }
     }
 
     /**

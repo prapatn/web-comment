@@ -62,12 +62,16 @@ class AuthController extends Controller
         return redirect('login')->with('success', 'Login details are not valid');
     }
 
-    function dashboard()
+    function dashboard(Request $request)
     {
         if(Auth::check())
         {
+            $post=null;
             $posts = Posts::orderBy('updated_at', 'DESC')->paginate(10);
-            return view('dashboard', compact('posts'));
+            if($request->id){
+                $post = Posts::find($request->id);
+            }
+             return view('dashboard', compact('posts','post'));
         }
 
         return redirect('login')->with('success', 'you are not allowed to access');

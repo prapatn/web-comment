@@ -5,7 +5,7 @@
     <form method="post" action="{{ route('comment.store') }}">
         @csrf
         <div class="form-group">
-            <input type="text" name="message" class="form-control" />
+            <input type="text" name="message" class="form-control" required />
             <input type="hidden" name="post_id" value="{{ $post_id }}" />
             <input type="hidden" name="comment_id" value="{{ $comment->id }}" />
         </div>

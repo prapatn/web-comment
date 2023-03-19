@@ -38,4 +38,5 @@ Route::middleware(['auth.check'])->group(function () {
     Route::post('posts/store', [PostController::class, 'store'])->name('posts.store');
     Route::post('comment/store', [CommentController::class, 'store'])->name('comment.store');
     Route::get('posts/delete/{id}',  [PostController::class, 'delete'])->name('posts.delete');
+    Route::post('posts/update/{id}', [PostController::class, 'update'])->name('posts.update');
 });

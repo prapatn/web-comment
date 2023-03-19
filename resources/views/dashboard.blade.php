@@ -39,12 +39,15 @@
                                                 <td>{{ $row->created_at }}</td>
                                                 <td>{{ $row->updated_at }}</td>
                                                 <td>
-                                                    <a href={{ route('posts.show', ['id'=>$row->id]) }} class="btn btn-primary">รายละเอียด</a>
-                                                   @if (Auth::user()->id==$row->user_id)
-                                                        <a href={{ route('posts.delete', ['id'=>$row->id]) }} class="btn btn-warning">แก้ไข</a>
-                                                        <a href={{ route('posts.delete', ['id'=>$row->id]) }} class="btn btn-danger"
+                                                    <a href={{ route('posts.show', ['id'=>$row->id]) }} class="btn
+                                                        btn-primary">รายละเอียด</a>
+                                                    @if (Auth::user()->id==$row->user_id)
+                                                    <a href={{ route('dashboard', ['id'=>$row->id]) }} class="btn
+                                                        btn-warning">แก้ไข</a>
+                                                    <a href={{ route('posts.delete', ['id'=>$row->id]) }} class="btn
+                                                        btn-danger"
                                                         onclick="return confirm('ต้องการลบโพสนี้หรือไม่')" >ลบ</a>
-                                                   @endif
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -62,9 +65,30 @@
             {{-- Form --}}
             <div class="col-md-4">
                 <div class="card">
+                    @if ($post)
+                    <div class="card-header">แก้ไขโพส</div>
+                    <div class="card-body">
+                        <form method="POST" action={{ route('posts.update', ['id'=>$post->id]) }}>
+                            <div class="form-group">
+                                @csrf
+                                <label class="label">Post Title: </label>
+                                <input type="text" name="title" class="form-control" required
+                                    value="{{$post->title}}" />
+                            </div>
+                            <div class="form-group">
+                                <label class="label">Post Message: </label>
+                                <textarea name="message" rows="10" cols="30" class="form-control"
+                                    required>{{ old('message', $post->message) }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-success" />
+                            </div>
+                        </form>
+                    </div>
+                    @else
                     <div class="card-header">สร้างโพส</div>
                     <div class="card-body">
-                        <form method="POST" action={{ route('posts.store') }} >
+                        <form method="POST" action={{ route('posts.store') }}>
                             <div class="form-group">
                                 @csrf
                                 <label class="label">Post Title: </label>
@@ -79,6 +103,7 @@
                             </div>
                         </form>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
