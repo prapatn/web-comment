@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Posts;
+use App\Models\Comments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PostController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,34 +30,29 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'         =>   'required',
+            'post_id'         =>   'required',
+            'comment_id'         =>   'nullable',
             'message'        =>   'required',
         ]);
+        $request = $request->all();
+        $request['user_id'] = Auth::user()->id;
 
-        Posts::create([
-            'title'  =>  $request['title'],
-            'message' =>  $request['message'],
-            'user_id' => Auth::user()->id,
-        ]);
-        return redirect()->back()->with('success', 'เพิ่มโพสใหม่สำเร็จ');
+        Comments::create($request);
+        return redirect()->back()->with('success', 'เพิ่มคอมเมนท์ใหม่สำเร็จ');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Comments $comments)
     {
-        $post = Posts::find($id);
-        if(!$post){
-             abort(404);
-        }
-        return view('posts.show',compact('post'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Posts $posts)
+    public function edit(Comments $comments)
     {
         //
     }
@@ -65,7 +60,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Posts $posts)
+    public function update(Request $request, Comments $comments)
     {
         //
     }
@@ -73,7 +68,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Posts $posts)
+    public function destroy(Comments $comments)
     {
         //
     }

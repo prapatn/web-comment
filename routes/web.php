@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,4 +36,5 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('dashboard',  [AuthController::class, 'dashboard'])->name('dashboard');
     Route::get('posts/show/{id}',  [PostController::class, 'show'])->name('posts.show');
     Route::post('posts/store', [PostController::class, 'store'])->name('posts.store');
+     Route::post('comment/store', [CommentController::class, 'store'])->name('comment.store');
 });
