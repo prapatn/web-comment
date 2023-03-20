@@ -107,7 +107,7 @@ class PostController extends Controller
             $post->delete();
 
             return redirect()
-                ->back()
+                ->route('dashboard')
                 ->with('success', 'ลบโพสสำเร็จ');
         } catch (\Throwable $th) {
             return abort(403);
