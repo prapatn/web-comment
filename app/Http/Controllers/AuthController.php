@@ -69,7 +69,10 @@ class AuthController extends Controller
             $post=null;
             $posts = Posts::orderBy('updated_at', 'DESC')->paginate(10);
             if($request->id){
-                $post = Posts::find($request->id);
+                $post = Posts::where('id',$request->id)->where('user_id',Auth::user()->id)->first();
+                if(!$post){
+                    abort(404);
+                }
             }
              return view('dashboard', compact('posts','post'));
         }
